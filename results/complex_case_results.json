@@ -1,0 +1,139 @@
+{
+  "total_cases": 8,
+  "validation_expectation_match": "8/8",
+  "planning_expectation_match": "8/8",
+  "cases": [
+    {
+      "case_id": "cx_01_6tower_solvable",
+      "description": "6-block tower from all blocks on table (high branching, solvable).",
+      "expected_validation": true,
+      "expected_planning": true,
+      "validation_valid": true,
+      "validation_errors": [],
+      "planning_success": true,
+      "plan_length": 10,
+      "plan": [
+        "(pickup b)",
+        "(stack b a)",
+        "(pickup c)",
+        "(stack c b)",
+        "(pickup d)",
+        "(stack d c)",
+        "(pickup e)",
+        "(stack e d)",
+        "(pickup f)",
+        "(stack f e)"
+      ],
+      "failure_reason": null,
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_02_cycle_goal_unsat",
+      "description": "Cyclic goal (on a b and on b a) is unsatisfiable.",
+      "expected_validation": true,
+      "expected_planning": false,
+      "validation_valid": true,
+      "validation_errors": [],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "Unsolvable: No valid plan exists for this problem.",
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_03_handempty_holding_unsat",
+      "description": "Goal requires (handempty) and (holding a) simultaneously (unsatisfiable).",
+      "expected_validation": true,
+      "expected_planning": false,
+      "validation_valid": true,
+      "validation_errors": [],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "Unsolvable: No valid plan exists for this problem.",
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_04_invalid_predicate",
+      "description": "Unknown predicate in init should fail validation and planning.",
+      "expected_validation": false,
+      "expected_planning": false,
+      "validation_valid": false,
+      "validation_errors": [
+        "Unknown predicate '(stacked)' in :init. Valid predicates: ['clear', 'handempty', 'holding', 'on', 'ontable']"
+      ],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "Unsolvable: No valid plan exists for this problem.",
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_05_undeclared_object",
+      "description": "Init references undeclared object c (invalid + unsatisfiable).",
+      "expected_validation": false,
+      "expected_planning": false,
+      "validation_valid": false,
+      "validation_errors": [
+        "Undeclared object 'c' used in :init predicate (clear). Declared: ['a', 'b']"
+      ],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "Unsolvable: No valid plan exists for this problem.",
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_06_deep_reversal_solvable",
+      "description": "Reverse a 4-block stack, solvable with longer plan.",
+      "expected_validation": true,
+      "expected_planning": true,
+      "validation_valid": true,
+      "validation_errors": [],
+      "planning_success": true,
+      "plan_length": 8,
+      "plan": [
+        "(unstack a b)",
+        "(putdown a)",
+        "(unstack b c)",
+        "(stack b a)",
+        "(unstack c d)",
+        "(stack c b)",
+        "(pickup d)",
+        "(stack d c)"
+      ],
+      "failure_reason": null,
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_07_missing_goal",
+      "description": "Missing goal section should fail validation and planning.",
+      "expected_validation": false,
+      "expected_planning": false,
+      "validation_valid": false,
+      "validation_errors": [
+        "Missing required section: (:goal ...)"
+      ],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "ParseError: No goal conditions found.",
+      "expectation_match": true
+    },
+    {
+      "case_id": "cx_08_wrong_arity",
+      "description": "Wrong predicate arity in init should fail validation.",
+      "expected_validation": false,
+      "expected_planning": false,
+      "validation_valid": false,
+      "validation_errors": [
+        "Predicate 'on' in :init expects 2 argument(s), got 1: ['a']"
+      ],
+      "planning_success": false,
+      "plan_length": 0,
+      "plan": [],
+      "failure_reason": "Unsolvable: No valid plan exists for this problem.",
+      "expectation_match": true
+    }
+  ]
+}

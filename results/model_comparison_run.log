@@ -1,0 +1,142 @@
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/google/api_core/_python_version_support.py:246: FutureWarning: You are using a non-supported Python version (3.9.6). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
+  warnings.warn(message, FutureWarning)
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/dilip/Downloads/NeuroSymbolicPlanner/nl_to_pddl.py:19: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+
+========================================================================
+  MODEL RUN: gemini-3-flash-preview
+========================================================================
+
+[cmp_01_reverse_5] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_02_two_towers_merge] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_03_hold_conflict_avoid] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_04_partial_preservation] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_05_long_chain] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_06_rearrange_mid] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_07_swap_top_middle] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_08_goal_with_table_constraints] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_09_disentangle_and_stack] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_10_reverse_4_with_extra] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+========================================================================
+  MODEL RUN: gemini-2.5-pro
+========================================================================
+
+[cmp_01_reverse_5] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_02_two_towers_merge] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_03_hold_conflict_avoid] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_04_partial_preservation] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_05_long_chain] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_06_rearrange_mid] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_07_swap_top_middle] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_08_goal_with_table_constraints] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_09_disentangle_and_stack] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+[cmp_10_reverse_4_with_extra] Generating...
+  Generation: OK
+  Validation: OK
+  Planning  : OK
+
+========================================================================
+  COMPARISON SUMMARY
+========================================================================
+  gemini-3-flash-preview
+    Generation : 10/10 (100.0%)
+    Validation : 10/10
+    Planning   : 10/10 (100.0%)
+  gemini-2.5-pro
+    Generation : 10/10 (100.0%)
+    Validation : 10/10
+    Planning   : 10/10 (100.0%)
+-
+  Delta (Pro - Flash) Planning Success: 0
+  Delta (Pro - Flash) Executability  : 0.0%
+  Saved: /Users/dilip/Downloads/NeuroSymbolicPlanner/results/model_comparison_gemini.json
+========================================================================
