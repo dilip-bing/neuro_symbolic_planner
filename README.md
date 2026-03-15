@@ -11,7 +11,7 @@
 Establish a working end-to-end baseline:
 
 ```
-Natural Language  →  [LLM Generator]  →  PDDL  →  [Validator]  →  [Planner]  →  Plan
+Natural Language  →  [Generator]  →  PDDL  →  [Validator]  →  [Planner]  →  Plan
 ```
 
 Record the **executability rate** without any feedback loops (zero-shot baseline). This is the baseline that Phase 2's Adversarial Critic will improve upon.
@@ -27,7 +27,7 @@ phase1/
 ├── problems/
 │   └── blocksworld_benchmark.pddl # 6 benchmark problems with ground-truth PDDL
 ├── src/
-│   ├── nl_to_pddl.py             # NL → PDDL generator (Anthropic API)
+│   ├── nl_to_pddl.py             # NL → PDDL generator (model API)
 │   ├── pddl_validator.py         # Structural + semantic PDDL validator
 │   ├── planner_runner.py         # Pure-Python BFS classical planner
 │   └── pipeline.py               # End-to-end orchestrator + reporting
@@ -44,7 +44,7 @@ phase1/
 
 ### 1. `nl_to_pddl.py` — NL→PDDL Generator
 
-Calls the Anthropic API (`claude-sonnet-4-20250514`) to translate natural language planning problem descriptions into PDDL problem files.
+Calls the configured model API (`GEMINI_MODEL`) to translate natural language planning problem descriptions into PDDL problem files.
 
 **Key design choices:**
 - System prompt enforces strict PDDL-only output (no markdown, no explanations)
@@ -111,15 +111,15 @@ Runs all 3 stages for each benchmark problem and produces a JSON report.
 
 **Two modes:**
 - `--mode oracle` — uses ground-truth PDDL (tests planner in isolation)
-- `--mode api` — calls Anthropic API to generate PDDL (full E2E test, requires API key)
+- `--mode api` — calls the configured model API to generate PDDL (full E2E test, requires API key)
 
 **Usage:**
 ```bash
 # Oracle mode (no API key needed):
 python src/pipeline.py --mode oracle
 
-# API mode (generates PDDL via LLM):
-export ANTHROPIC_API_KEY="your-key-here"
+# API mode (generates PDDL via model API):
+export GEMINI_API_KEY="your-key-here"
 python src/pipeline.py --mode api
 
 # Save results to custom path:
@@ -156,8 +156,8 @@ Oracle mode confirms the **planner is correct** on all 6 problems.
 
 **Executability Rate (oracle): 6/6 = 100%**
 
-When `--mode api` is used with the Anthropic API, the baseline executability rate
-represents the LLM's **zero-shot PDDL generation accuracy** — this is the number
+When `--mode api` is used with the configured model API, the baseline executability rate
+represents the model's **zero-shot PDDL generation accuracy** — this is the number
 Phase 2 will improve upon with the Adversarial Critic feedback loop.
 
 ---
@@ -212,6 +212,6 @@ are the structured inputs the Critic will consume.
 
 - Python 3.10+
 - Standard library only (`re`, `collections`, `json`, `urllib`, `dataclasses`)
-- Anthropic API key (only for `--mode api`)
+- Model API key (`GEMINI_API_KEY`, only for `--mode api`)
 
 No external packages required.

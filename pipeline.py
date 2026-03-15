@@ -8,7 +8,7 @@ Orchestrates the full Phase 1 workflow:
   NL Description
        │
        ▼
-  [NLToPDDLGenerator]   ← calls Anthropic API (LLaMA-equivalent via Claude)
+    [NLToPDDLGenerator]   ← calls configured model API
        │
        ▼ generated PDDL
   [PDDLValidator]        ← structural + semantic checks
@@ -118,7 +118,7 @@ class Phase1Pipeline:
     Full Phase 1 end-to-end pipeline.
 
     Modes:
-      - 'api'   : calls the Anthropic API to generate PDDL (requires API key)
+            - 'api'   : calls the model API to generate PDDL (requires API key)
       - 'oracle': uses ground-truth PDDL from the benchmark file (for planner testing only)
     """
 
@@ -274,14 +274,14 @@ def main():
         choices=["api", "oracle"],
         default="oracle",
         help=(
-            "'api'    = call Anthropic API to generate PDDL (requires ANTHROPIC_API_KEY)\n"
+            "'api'    = call model API to generate PDDL (requires GEMINI_API_KEY)\n"
             "'oracle' = use ground-truth PDDL (tests planner only)"
         ),
     )
     parser.add_argument(
         "--api-key",
         default=None,
-        help="Anthropic API key (overrides ANTHROPIC_API_KEY env var)",
+        help="Model API key (overrides GEMINI_API_KEY env var)",
     )
     parser.add_argument(
         "--output",

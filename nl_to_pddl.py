@@ -3,13 +3,13 @@ nl_to_pddl.py
 =============
 Phase 1 - NL → PDDL Generator
 
-Uses the Anthropic API (claude-sonnet-4-20250514) to translate
+Uses the configured model API to translate
 natural language problem descriptions into valid PDDL problem files.
 
 The generator is given:
   - The domain PDDL as context
   - The natural language description
-  - A strict prompt engineering template
+    - A strict output template
 
 It returns the raw PDDL string.
 """
