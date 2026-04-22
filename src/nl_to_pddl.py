@@ -16,6 +16,16 @@ warnings.filterwarnings("ignore", category=UserWarning, module="google_genai")
 logging.getLogger("google_genai").setLevel(logging.ERROR)
 from google import genai
 from google.genai import types as genai_types
+from .key_manager import KeyManager
+
+logger = logging.getLogger(__name__)
+_key_manager: KeyManager = None
+
+def get_key_manager() -> KeyManager:
+    global _key_manager
+    if _key_manager is None:
+        _key_manager = KeyManager()
+    return _key_manager
 
 
 # ── Prompt Templates ──────────────────────────────────────────────────────────
@@ -225,58 +235,74 @@ class NLToPDDLGenerator:
             "raw_response": "",
         }
 
-        api_key = self.api_key or os.environ.get("GEMINI_API_KEY", "")
-        if not api_key:
-            result["error"] = "GEMINI_API_KEY not set."
-            self.generation_log.append(result)
-            return result
+        # Use injected key (testing) or rotate through key manager
+        if self.api_key:
+            keys_to_try = [self.api_key]
+            km = None
+        else:
+            km = get_key_manager()
+            keys_to_try = None  # will call km.current_key dynamically
 
-        client = genai.Client(api_key=api_key)
-
-        # Retry up to 2 times on transient errors (503, 429, timeout).
-        # Cap at 2 retries (not 4) so a quota-exhausted key can't burn 43 min per problem.
+        sys_prompt = self._system_prompt if iteration == 0 else self._repair_system_prompt
         last_error = ""
-        for attempt in range(2):
-            try:
-                # Use mislead-free system prompt during repairs so the critic's
-                # instruction is not countered by the initial misleading hint.
-                sys_prompt = self._system_prompt if iteration == 0 else self._repair_system_prompt
-                response = client.models.generate_content(
-                    model=self.model_name,
-                    contents=prompt,
-                    config=genai_types.GenerateContentConfig(
-                        system_instruction=sys_prompt,
-                        temperature=0.2,
-                    ),
-                )
-                raw = response.text.strip()
-                result["raw_response"] = raw
-                result["pddl"] = self._clean_pddl(raw)
-                result["success"] = True
+
+        # Try up to len(all_keys) times — rotate on quota exhaustion
+        max_key_attempts = km.total_keys if km else 1
+        for key_attempt in range(max_key_attempts):
+            api_key = (keys_to_try[0] if keys_to_try else km.current_key)
+            if not api_key:
+                result["error"] = "No API key available."
                 break
 
-            except Exception as e:
-                last_error = str(e)
-                err_lower = last_error.lower()
-                # Daily quota exhaustion is permanent — fail immediately, no sleep.
-                is_daily_quota = any(x in err_lower for x in [
-                    "daily", "quota exceeded", "resource_exhausted", "per day"
-                ]) and "429" in last_error
-                if is_daily_quota:
-                    result["error"] = f"DAILY_QUOTA_EXHAUSTED: {last_error}"
+            client = genai.Client(api_key=api_key)
+
+            # Up to 2 transient retries per key
+            for attempt in range(2):
+                try:
+                    response = client.models.generate_content(
+                        model=self.model_name,
+                        contents=prompt,
+                        config=genai_types.GenerateContentConfig(
+                            system_instruction=sys_prompt,
+                            temperature=0.2,
+                        ),
+                    )
+                    raw = response.text.strip()
+                    result["raw_response"] = raw
+                    result["pddl"] = self._clean_pddl(raw)
+                    result["success"] = True
                     break
-                is_transient = any(x in err_lower for x in ["503", "429", "unavailable", "timeout"])
-                if is_transient and attempt < 1:
-                    # Rate-limit window (not daily quota) — wait 65s and retry once
-                    import time
-                    time.sleep(65)
-                    continue
-                # Non-transient or exhausted retries
-                result["error"] = last_error
-                break
 
-        if not result["success"] and not result["error"]:
-            result["error"] = last_error
+                except Exception as e:
+                    last_error = str(e)
+                    err_lower = last_error.lower()
+                    is_daily_quota = (
+                        any(x in err_lower for x in ["daily", "quota exceeded",
+                                                      "resource_exhausted", "per day"])
+                        and "429" in last_error
+                    )
+                    if is_daily_quota:
+                        # This key is done — mark it and rotate
+                        if km:
+                            km.mark_exhausted(api_key)
+                        result["error"] = f"DAILY_QUOTA_EXHAUSTED: {last_error}"
+                        break
+                    is_transient = any(x in err_lower for x in
+                                       ["503", "429", "unavailable", "timeout"])
+                    if is_transient and attempt < 1:
+                        import time
+                        time.sleep(65)
+                        continue
+                    result["error"] = last_error
+                    break
+
+            if result["success"]:
+                break
+            # If quota exhausted and more keys available, try next key
+            if km and km.has_keys and "DAILY_QUOTA_EXHAUSTED" in result.get("error", ""):
+                result["error"] = None  # reset for next key attempt
+                continue
+            break  # non-quota error — don't rotate
 
         self.generation_log.append(result)
         return result
