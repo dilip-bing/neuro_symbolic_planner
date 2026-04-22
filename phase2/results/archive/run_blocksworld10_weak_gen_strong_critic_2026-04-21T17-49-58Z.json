@@ -1,0 +1,98 @@
+{
+  "blocksworld": {
+    "bw_p1": {
+      "problem_id": "bw_p1",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p2": {
+      "problem_id": "bw_p2",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p3": {
+      "problem_id": "bw_p3",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p4": {
+      "problem_id": "bw_p4",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p5": {
+      "problem_id": "bw_p5",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p6": {
+      "problem_id": "bw_p6",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p7": {
+      "problem_id": "bw_p7",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p8": {
+      "problem_id": "bw_p8",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p9": {
+      "problem_id": "bw_p9",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "bw_p10": {
+      "problem_id": "bw_p10",
+      "baseline_exec": false,
+      "final_exec": true,
+      "iterations_needed": 1,
+      "solved": true
+    },
+    "_summary": {
+      "total": 10,
+      "solved": 10,
+      "baseline_executability_rate": 0.0,
+      "final_executability_rate": 1.0,
+      "improvement": 1.0,
+      "repaired_by_loop": 10
+    }
+  },
+  "_meta": {
+    "run_timestamp": "2026-04-21T17-49-58Z",
+    "generator_model": "gemini-2.5-flash-lite",
+    "critic_model": "gemini-3-flash-preview",
+    "critic_backend": "gemini",
+    "withhold_predicates": false,
+    "inject_type_mislead": false,
+    "use_agnostic_nl": false,
+    "domains": [
+      "blocksworld"
+    ],
+    "problems_used": "bw_p1\u2013bw_p10 (first 10 of 15)",
+    "max_repair_iterations": 5,
+    "validator_fix": "state-predicate filter applied (holding/clear/ontable excluded from type-check)",
+    "note": "Weak generator + strong critic. All 10 solved in exactly 1 repair iteration."
+  }
+}

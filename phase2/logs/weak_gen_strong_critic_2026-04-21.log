@@ -1,0 +1,178 @@
+Generator: gemini-2.5-flash-lite
+Critic   : gemini-3-flash-preview
+
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/dilip/Library/Python/3.9/lib/python/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+=== 1/3 BLOCKSWORLD | weak generator | strong critic ===
+
+============================================================
+Domain: BLOCKSWORLD  (15 problems, max 5 repair iterations)
+Critic backend: GEMINI
+Predicates in prompt: provided
+Misleading type hint:  off
+Domain-agnostic NL:    off
+============================================================
+
+  [bw_p1] There are two blocks, A and B, both sitting on the table. The goal is to stack b...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65417ms
+
+  [bw_p2] There are three blocks A, B, and C, all on the table. Build a tower where C is o...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65269ms
+
+  [bw_p3] Block A is on top of block B, and B is on top of C, with C on the table. Rearran...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65307ms
+
+  [bw_p4] Blocks A, B, C, and D are all on the table. Stack them into a single tower: D on...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65293ms
+
+  [bw_p5] Block A is stacked on top of block B, which is on the table. Swap them so that B...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65286ms
+
+  [bw_p6] Five blocks A, B, C, D, E are all on the table. Build a tower with E on top of D...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65523ms
+
+  [bw_p7] Block C is on block A, and block A is on the table. Block B is on the table. The...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65516ms
+
+  [bw_p8] You have six blocks: A, B, C, D, E, F, all on the table. Build two towers: one w...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65323ms
+
+  [bw_p9] The current state: D is on C, C is on B, B is on A, A is on the table. Goal: rev...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65707ms
+
+  [bw_p10] Block A is on block B. Block C is on block D. B and D are on the table. Rearrang...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65469ms
+
+  [bw_p11] Eight blocks A, B, C, D, E, F, G, H are all on the table. Build a single tall to...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65425ms
+
+  [bw_p12] The current state: E is on D, D is on C, C is on B, B is on A, and A is on the t...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65322ms
+
+  [bw_p13] There are two separate towers: the first has C on B on A (A on the table), and t...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65285ms
+
+  [bw_p14] Block A is on block B, block C is on block D, and block E is on block F. Blocks ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65294ms
+
+  [bw_p15] A tower has E on D, D on C, C on B, B on A, with A on the table. Two extra block...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65343ms
+
+  [blocksworld] Summary:
+    Baseline executability:  0.0%
+    Final executability:     0.0%
+    Improvement:            +0.0%
+    Repaired by loop:        0/15
+
+=== 2/3 GRIPPER | weak generator | strong critic ===
+
+============================================================
+Domain: GRIPPER  (11 problems, max 5 repair iterations)
+Critic backend: GEMINI
+Predicates in prompt: provided
+Misleading type hint:  off
+Domain-agnostic NL:    off
+============================================================
+
+  [gr_p1] There is one ball (ball1) in room A. The robot is in room A with both grippers f...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65302ms
+
+  [gr_p2] Two balls (ball1, ball2) are in room A. The robot starts in room A with both gri...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65640ms
+
+  [gr_p3] Ball1 is in room A, ball2 is in room B. The robot is in room A, both grippers fr...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65461ms
+
+  [gr_p4] There are three rooms: A, B, C. Three balls (ball1, ball2, ball3) are all in roo...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65290ms
+
+  [gr_p5] The robot is in room B. Ball1 is in room A and ball2 is in room C. Both grippers...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65283ms
+
+  [gr_p6] Four balls (ball1 to ball4) are all in room A. The robot is in room A with both ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65342ms
+
+  [gr_p7] There are four rooms: A, B, C, D. Ball1 is in room A, ball2 is in room B, ball3 ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65324ms
+
+  [gr_p8] There are five rooms: A, B, C, D, E. The robot is in room C with both grippers f...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65351ms
+
+  [gr_p9] Four rooms: A, B, C, D. The robot starts in room B with both grippers free. Ball...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65826ms
+
+  [gr_p10] Four rooms: A, B, C, D. The robot starts in room D with both grippers free. Ball...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65529ms
+
+  [gr_p11] Five rooms: A, B, C, D, E. The robot starts in room A with both grippers free. B...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65432ms
+
+  [gripper] Summary:
+    Baseline executability:  0.0%
+    Final executability:     0.0%
+    Improvement:            +0.0%
+    Repaired by loop:        0/11
+
+=== 3/3 LOGISTICS | weak generator | strong critic ===
+
+============================================================
+Domain: LOGISTICS  (14 problems, max 5 repair iterations)
+Critic backend: GEMINI
+Predicates in prompt: provided
+Misleading type hint:  off
+Domain-agnostic NL:    off
+============================================================
+
+  [log_p1] There is one package (pkg1) at location downtown in city Boston. A truck (truck1...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65337ms
+
+  [log_p2] Package pkg1 is at location depot in city New York. Truck truck1 is at location ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65331ms
+
+  [log_p3] Package pkg1 is at airport JFK in New York. Airplane plane1 is at JFK. Airport L...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65322ms
+
+  [log_p4] Package pkg1 is at downtown Chicago. Truck truck1 is also at downtown Chicago. C...
+  → FAILED | baseline_exec=False | iterations_needed=— | 85808ms
+
+  [log_p5] Two packages (pkg1 and pkg2) are at location hub in city Dallas. Two trucks (tru...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65384ms
+
+  [log_p6] Package pkg1 starts at location depot in city Boston. There is a truck (truck1) ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65369ms
+
+  [log_p7] Two cities: Boston and Chicago. Package pkg1 is at depot-bos in Boston; package ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65338ms
+
+  [log_p8] Three cities: Boston, Chicago, and Los Angeles. Package pkg1 starts at downtown-...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65357ms
+
+  [log_p9] Three cities: Boston, Chicago, Dallas. Pkg1 is at downtown-boston (Boston) and m...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65462ms
+
+  [log_p10] Two cities: New York and Los Angeles. Pkg1 is at JFK airport (New York); pkg2 is...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65327ms
+
+  [log_p11] Four cities: Boston, Chicago, Dallas, Los Angeles. Pkg1 is at depot-boston and m...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65325ms
+
+  [log_p12] Two packages: pkg1 and pkg2. pkg1 is at downtown-boston in city Boston. pkg2 is ...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65347ms
+
+  [log_p13] Three packages: pkg1, pkg2, pkg3. pkg1 is at depot-chicago; pkg2 is at depot-chi...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65333ms
+
+  [log_p14] Four packages: pkg1, pkg2, pkg3, pkg4. pkg1 and pkg2 are at depot-dallas in city...
+  → FAILED | baseline_exec=False | iterations_needed=— | 65332ms
+
+  [logistics] Summary:
+    Baseline executability:  0.0%
+    Final executability:     0.0%
+    Improvement:            +0.0%
+    Repaired by loop:        0/14
+
+ALL DONE

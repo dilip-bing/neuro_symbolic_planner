@@ -1,0 +1,41 @@
+# Environment variables — NEVER commit API keys
+.env
+*.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+
+# Logs (large, generated files)
+logs/*.log
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.blg
+paper/*.bbl
+paper/*.pdf
+
+# macOS
+.DS_Store
+
+# IDE
+.cursor/
+.vscode/
+*.swp
