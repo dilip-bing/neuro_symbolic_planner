@@ -17,18 +17,37 @@ _KEYS_FILE = pathlib.Path(__file__).parent.parent / "api_keys.txt"
 
 
 def _load_keys() -> list:
-    keys = []
-    # First: keys from file
+    """
+    Load keys from api_keys.txt in order.
+    Keys after a line containing 'final' or 'paid' in a comment are treated
+    as last-resort keys and moved to the end of the list.
+    """
+    normal_keys = []
+    paid_keys = []
+    paid_section = False
+
     if _KEYS_FILE.exists():
         for line in _KEYS_FILE.read_text().splitlines():
-            line = line.strip()
-            if line and not line.startswith("#"):
-                keys.append(line)
-    # Fallback: key from environment (always available as last resort)
+            stripped = line.strip()
+            if stripped.startswith("#"):
+                # If comment mentions "final" or "paid", everything after is paid/last-resort
+                lower = stripped.lower()
+                if any(w in lower for w in ["final", "paid", "last"]):
+                    paid_section = True
+                continue
+            if not stripped:
+                continue
+            if paid_section:
+                paid_keys.append(stripped)
+            else:
+                normal_keys.append(stripped)
+
+    # .env key goes after normal keys but before paid keys
     env_key = os.environ.get("GEMINI_API_KEY", "")
-    if env_key and env_key not in keys:
-        keys.append(env_key)
-    return keys
+    if env_key and env_key not in normal_keys and env_key not in paid_keys:
+        normal_keys.append(env_key)
+
+    return normal_keys + paid_keys
 
 
 class KeyManager:

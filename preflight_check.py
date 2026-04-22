@@ -81,36 +81,28 @@ try:
     if not keys:
         check("API keys found", False, "No keys in api_keys.txt and GEMINI_API_KEY not set")
     else:
-        print(f"  Found {len(keys)} key(s) to test...")
-        working_keys = 0
-        for i, key in enumerate(keys):
-            label = f"Key {i+1} (...{key[-6:]})"
-            try:
-                client = genai.Client(api_key=key)
-                # Minimal test: single short generation
-                resp = client.models.generate_content(
-                    model=os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite"),
-                    contents="Reply with only the word: OK",
-                    config=genai_types.GenerateContentConfig(
-                        temperature=0.0,
-                        max_output_tokens=5,
-                    ),
-                )
-                text = resp.text.strip()
-                if text:
-                    check(label, True, f"response: '{text[:20]}'")
-                    working_keys += 1
-                else:
-                    check(label, False, "empty response")
-            except Exception as e:
-                err = str(e)
-                if "429" in err or "quota" in err.lower():
-                    print(f"{WARN}  {label} — QUOTA EXHAUSTED (remove or replace this key)")
-                else:
-                    check(label, False, err[:80])
-
-        check(f"At least 1 working key", working_keys > 0,
-              f"{working_keys}/{len(keys)} keys working")
+        print(f"  Found {len(keys)} key(s) loaded. Testing only the first one to preserve quota...")
+        key = keys[0]
+        label = f"Key 1 (...{key[-6:]})"
+        try:
+            client = genai.Client(api_key=key)
+            resp = client.models.generate_content(
+                model=os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite"),
+                contents="Reply with only the word: OK",
+                config=genai_types.GenerateContentConfig(
+                    temperature=0.0,
+                    max_output_tokens=5,
+                ),
+            )
+            text = resp.text.strip()
+            check(label, bool(text), f"response: '{text[:20]}'")
+            print(f"  Remaining {len(keys)-1} key(s) untested — will be used automatically if this one exhausts.")
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "quota" in err.lower():
+                print(f"{WARN}  {label} — QUOTA EXHAUSTED, will rotate to next key automatically")
+            else:
+                check(label, False, err[:80])
 
 except Exception as e:
     check("Gemini library", False, str(e))
