@@ -1,24 +1,16 @@
 # Environment variables — NEVER commit API keys
 .env
-*.env
-.env.*
+.env.local
+.env.production
+!.env.example
 
 # Python
 __pycache__/
 *.py[cod]
 *.pyo
-*.pyd
-.Python
-*.egg-info/
-dist/
-build/
-.eggs/
 .venv/
 venv/
 env/
-
-# Logs (large, generated files)
-logs/*.log
 
 # LaTeX build artifacts
 paper/*.aux
